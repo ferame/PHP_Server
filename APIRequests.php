@@ -15,7 +15,7 @@ if ($isTweet) {
     )));
 
     $request->setHeaders(array(
-  'authorization' => 'OAuth oauth_consumer_key="660PKn9qD6wnTyARbolTUKMEJ", oauth_nonce="4nb9tLZj5Nj4fVuTKdIwnraeCtK6XWtK", oauth_signature="hgCKUVhbhH9CCtg%2BASdmwyYMzBc%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1517322618", oauth_token="4527318323-QgDLuD3iPMTlvYTTYSrroMigkmwH97IcXcYidvx", oauth_version="1.0"'
+  'authorization' => 'OAuth oauth_consumer_key="660PKn9qD6wnTyARbolTUKMEJ", oauth_nonce="e8TStetU54nzI4d3THlCXq60hjSJpVEI", oauth_signature="UNleuCMT6k9Yy6DdmAasdntSyyU%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1517580449", oauth_token="4527318323-QgDLuD3iPMTlvYTTYSrroMigkmwH97IcXcYidvx", oauth_version="1.0"'
 ));
 
 
