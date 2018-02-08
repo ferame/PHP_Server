@@ -63,5 +63,5 @@ if ($isTweet) {
     $temperature = $weatherInfo['list'][0]['main']['temp'];
     $temperatureDecimal = number_format((float)floatval($temperature), 1, '.', '');
 
-    echo($time_prediction . "¬" . $main_weather . " (" . ucfirst($description_weather) . ")¬" . $temperatureDecimal . " °C");
+    echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " °C");
 }
