@@ -55,6 +55,7 @@ if ($isTweet) {
     $weatherInfo = json_decode($json, true);
 
     $time_prediction = $weatherInfo['list'][0]['dt_txt'];
+    echo date_format($time_prediction,"M d, D g:i A");
     
     $main_weather = $weatherInfo['list'][0]['weather'][0]['main'];
     
@@ -63,5 +64,5 @@ if ($isTweet) {
     $temperature = $weatherInfo['list'][0]['main']['temp'];
     $temperatureDecimal = number_format((float)floatval($temperature), 1, '.', '');
 
-    echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " Celsius");
+    echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " Celsius" . "#Edinburgh");
 }
