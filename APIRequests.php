@@ -55,8 +55,8 @@ if ($isTweet) {
     $weatherInfo = json_decode($json, true);
 
     $time_prediction = $weatherInfo['list'][0]['dt_txt'];
-    echo date_format($time_prediction,"M d, D g:i A");
-    
+    $time_prediction = date_format($time_prediction,"M d H:i");
+   
     $main_weather = $weatherInfo['list'][0]['weather'][0]['main'];
     
     $description_weather = $weatherInfo['list'][0]['weather'][0]['description'];
