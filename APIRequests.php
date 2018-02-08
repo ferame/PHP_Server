@@ -2,6 +2,9 @@
 $isTweet=$_GET['tweet'];
 $isTwilio=$_GET['twilio'];
 $isWeather=$_GET['weather'];
+$postRez = $_POST;
+$isStudent = strpos($postRez, 'Crd:');
+
 use Twilio\Rest\Client;
 require_once('TwitterAPIExchange.php');
 
@@ -66,4 +69,6 @@ if ($isTweet) {
     $temperatureDecimal = number_format((float)floatval($temperature), 1, '.', '');
 
     echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " Celsius" . "#Edinburgh");
+}elseif ($isStudent){
+    return "BYBYS" + substr($postRez, 4);
 }
