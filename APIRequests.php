@@ -3,7 +3,8 @@ $isTweet=$_GET['tweet'];
 $isTwilio=$_GET['twilio'];
 $isWeather=$_GET['weather'];
 $postRez = $_POST;
-$isStudent = strpos($postRez, 'Crd:');
+$isStudent = true;
+//$isStudent = strpos($postRez, 'Crd:');
 
 use Twilio\Rest\Client;
 require_once('TwitterAPIExchange.php');
