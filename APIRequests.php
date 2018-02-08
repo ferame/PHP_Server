@@ -53,12 +53,15 @@ if ($isTweet) {
 }elseif ($isWeather){
     $json = file_get_contents("http://api.openweathermap.org/data/2.5/forecast?id=3333229&appid=1122e950271e86bfbffb6a2378ff6943&units=metric");
     $weatherInfo = json_decode($json, true);
+
     $time_prediction = $weatherInfo['list'][0]['dt_txt'];
-    echo($time_prediction) . "¬";
+    
     $main_weather = $weatherInfo['list'][0]['weather'][0]['main'];
-    echo($main_weather) . "¬";
+    
     $description_weather = $weatherInfo['list'][0]['weather'][0]['description'];
-    echo($description_weather) . "¬";
+    
     $temperature = $weatherInfo['list'][0]['main']['temp'];
-    echo($temperature);
+    $temperatureDecimal = number_format((float)floatval($temperature), 1, '.', '');
+
+    echo($time_prediction . "¬" . $main_weather . " (" . ucfirst($description_weather) . ")¬" . $temperatureDecimal . " °C");
 }
