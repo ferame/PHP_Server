@@ -2,9 +2,16 @@
 $isTweet=$_GET['tweet'];
 $isTwilio=$_GET['twilio'];
 $isWeather=$_GET['weather'];
-$postRez = $_POST;
-$isStudent = true;
-//$isStudent = strpos($postRez, 'Crd:');
+$isStudent = false;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $postRez = file_get_contents('php://input');
+    if (strpos($postRez, "Crd:") !== false){
+        $isStudent = true;
+    }else{
+        echo "Non-existent student";
+    }
+}
 
 use Twilio\Rest\Client;
 require_once('TwitterAPIExchange.php');
@@ -71,5 +78,28 @@ if ($isTweet) {
 
     echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " Celsius" . "#Edinburgh");
 }elseif ($isStudent){
-    return "BYBYS" + substr($postRez, 4);
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => "http://tweety.gq/ArrestDB/students",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_POSTFIELDS => "",
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+    echo "cURL Error #:" . $err;
+    } else {
+    echo $response;
+    }
+    //$data = GET http://api.example.com/customers/;
 }
