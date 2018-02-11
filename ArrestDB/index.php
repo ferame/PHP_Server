@@ -1,6 +1,6 @@
 <?php
 
-$dsn = 'sqlite://./db.red';
+$dsn = 'sqlite://./database_final';
 $clients = [];
 
 /**
