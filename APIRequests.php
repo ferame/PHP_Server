@@ -81,7 +81,7 @@ if ($isTweet) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "http://tweety.gq/ArrestDB/students",
+    CURLOPT_URL => "http://tweety.gq/ArrestDB/Students",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -96,10 +96,15 @@ if ($isTweet) {
 
     curl_close($curl);
 
+    echo $jsonResponse;
+
     if ($err) {
-    echo "cURL Error #:" . $err;
+        echo "cURL Error #:" . $err;
     } else {
-    echo $response;
+        echo $response;
+        //$jsonResponse = json_decode($response,true);    
     }
-    //$data = GET http://api.example.com/customers/;
+    /*if (!empty($jsonResponse)){
+        
+    }*/
 }
