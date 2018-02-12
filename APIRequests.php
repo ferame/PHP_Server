@@ -103,7 +103,7 @@ function getWeather(){
 function checkTutorial($postRez){
     $processed = preg_replace('/\s+/', '', substr($postRez, 4));
     $RFID = substr($processed, 0, 8);
-    $deviceID = substr($processed, 9);
+    $deviceID = substr($processed, 8);
     if (empty($deviceID)){
         return "Missing device ID";
     }
@@ -135,18 +135,26 @@ function checkTutorial($postRez){
 }
 
 function checkCurrentTutorial($tutorialsData, $deviceID){
-    $time = date("D G:i");
-    $timeTimestamp = strtotime($time);
+    //$time = date("D G:i");
+    //$timeTimestamp = strtotime($time);
+    $timeTimestamp = strtotime("MON 14:30");
     $supposedToGo = NULL;
     foreach($tutorialsData as $tutorial){
         $startTimestamp = strtotime($tutorial['start_time']);
         $endTimestamp = strtotime($tutorial['end_time']);
         if($timeTimestamp >= $startTimestamp && $endTimestamp > $timeTimestamp){
-            if(strcmp($deviceID,$tutorial['device_id'])){
+            echo "\n";
+            echo "THIS TUTORIAL IS WITH: " . $tutorial['device_id'];
+            echo "\n";
+            echo "AND I AM WITH " . $deviceID;
+            echo "\n";
+            echo "COMPARISON RESULT: " . strcmp($tutorial['device_id'],$deviceID);
+            echo "\n";
+            if(strcmp($deviceID,$tutorial['device_id']) === 0){
                 $strToReturn = $tutorial['course'] . " tutorial presence marked.";
                 return $strToReturn;
             }else{
-                $supposedToGo = "Wrong room, go to " . $tutorial['tutorial_id'];
+                $supposedToGo = "Wrong room, you have " . $tutorial['tutorial_id'] . " go to " . $tutorial['location'];
             }
         }
     }
