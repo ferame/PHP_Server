@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/London');
+
 $isTweet=$_GET['tweet'];
 $isTwilio=$_GET['twilio'];
 $isWeather=$_GET['weather'];
@@ -17,6 +19,20 @@ use Twilio\Rest\Client;
 require_once('TwitterAPIExchange.php');
 
 if ($isTweet) {
+    getTweet();
+}
+if ($isTwilio){
+    sendTwillioMessage();
+}
+if ($isWeather){
+    getWeather();
+}
+
+if ($isStudent){
+    echo (checkTutorial($postRez));
+}
+
+function getTweet(){
     /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
     $settings = array(
     'oauth_access_token' => "4527318323-QgDLuD3iPMTlvYTTYSrroMigkmwH97IcXcYidvx",
@@ -24,6 +40,7 @@ if ($isTweet) {
     'consumer_key' => "660PKn9qD6wnTyARbolTUKMEJ",
     'consumer_secret' => "4ooMzBfjIFKbGPdrIVY6dS4mWm0loDsET0wnkW8YtQQ0WEcG6C"
     );
+
     $url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 
     $requestMethod = "GET";
@@ -37,7 +54,9 @@ if ($isTweet) {
     $tweets = json_decode($json, true);
 
     echo $tweets[0]['text'];
-}elseif ($isTwilio){
+}
+
+function sendTwillioMessage(){
     // Required if your environment does not handle autoloading
     require __DIR__ . '/vendor/autoload.php';
 
@@ -61,7 +80,9 @@ if ($isTweet) {
         )
     );
     echo "SMS sent";
-}elseif ($isWeather){
+}
+
+function getWeather(){
     $json = file_get_contents("http://api.openweathermap.org/data/2.5/forecast?id=3333229&appid=1122e950271e86bfbffb6a2378ff6943&units=metric");
     $weatherInfo = json_decode($json, true);
 
@@ -77,11 +98,72 @@ if ($isTweet) {
     $temperatureDecimal = number_format((float)floatval($temperature), 1, '.', '');
 
     echo($time_prediction . "#" . $main_weather . " (" . ucfirst($description_weather) . ")#" . $temperatureDecimal . " Celsius" . "#Edinburgh");
-}elseif ($isStudent){
-    $curl = curl_init();
+}
 
+function checkTutorial($postRez){
+    $processed = preg_replace('/\s+/', '', substr($postRez, 4));
+    $RFID = substr($processed, 0, 8);
+    $deviceID = substr($processed, 9);
+    if (empty($deviceID)){
+        return "Missing device ID";
+    }
+
+    $jsonResponseStudents = dbQueryRequest("/students/rfid/" . $RFID);
+
+    $uniid = NULL;
+    if (!empty($jsonResponseStudents)){
+        $uniid = $jsonResponseStudents[0]["uniid"];
+        echo "This is uniid:" . $uniid . "\n";
+    } else {
+        return "Database offline";
+    }
+
+    $jsonResponseTutorials = NULL;
+    if (!empty($uniid)){
+        $jsonResponseTutorials = dbQueryRequest("/tutorials/uniid/" . $uniid);
+    }else{
+        return "User doesn't exist";
+    }
+    
+    if (!empty($jsonResponseTutorials)){
+        return (checkCurrentTutorial($jsonResponseTutorials,$deviceID));
+    }else{
+        return "You have no tutorials assigned";
+    }
+    //6A C0 97 E7
+    // http://tweety.gq/ArrestDB/personal_tutors/pt_email/steve@jobs.com
+}
+
+function checkCurrentTutorial($tutorialsData, $deviceID){
+    $time = date("D G:i");
+    $timeTimestamp = strtotime($time);
+    $supposedToGo = NULL;
+    foreach($tutorialsData as $tutorial){
+        $startTimestamp = strtotime($tutorial['start_time']);
+        $endTimestamp = strtotime($tutorial['end_time']);
+        if($timeTimestamp >= $startTimestamp && $endTimestamp > $timeTimestamp){
+            if(strcmp($deviceID,$tutorial['device_id'])){
+                $strToReturn = $tutorial['course'] . " tutorial presence marked.";
+                return $strToReturn;
+            }else{
+                $supposedToGo = "Wrong room, go to " . $tutorial['tutorial_id'];
+            }
+        }
+    }
+    if(empty($supposedToGo)){
+        return "You have no tutorial at this time, go home.";
+    }else{
+        return $supposedToGo;
+    }
+}
+
+function dbQueryRequest($query){
+    $curl = curl_init();
+    $fullQuery = "http://tweety.gq/ArrestDB" . $query;
+    echo $fullQuery;
     curl_setopt_array($curl, array(
-    CURLOPT_URL => "http://tweety.gq/ArrestDB/Students",
+    //CURLOPT_URL => ("http://tweety.gq/ArrestDB/students/rfid/" . $processedRFID),
+    CURLOPT_URL => $fullQuery,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -96,15 +178,11 @@ if ($isTweet) {
 
     curl_close($curl);
 
-    echo $jsonResponse;
-
     if ($err) {
         echo "cURL Error #:" . $err;
+        return NULL;
     } else {
         echo $response;
-        //$jsonResponse = json_decode($response,true);    
+        return json_decode($response,true);
     }
-    /*if (!empty($jsonResponse)){
-        
-    }*/
 }
