@@ -113,7 +113,6 @@ function checkTutorial($postRez){
     $uniid = NULL;
     if (!empty($jsonResponseStudents)){
         $uniid = $jsonResponseStudents[0]["uniid"];
-        echo "This is uniid:" . $uniid . "\n";
     } else {
         return "Database offline";
     }
@@ -130,8 +129,6 @@ function checkTutorial($postRez){
     }else{
         return "You have no tutorials assigned";
     }
-    //6A C0 97 E7
-    // http://tweety.gq/ArrestDB/personal_tutors/pt_email/steve@jobs.com
 }
 
 function checkCurrentTutorial($tutorialsData, $deviceID){
@@ -143,13 +140,6 @@ function checkCurrentTutorial($tutorialsData, $deviceID){
         $startTimestamp = strtotime($tutorial['start_time']);
         $endTimestamp = strtotime($tutorial['end_time']);
         if($timeTimestamp >= $startTimestamp && $endTimestamp > $timeTimestamp){
-            echo "\n";
-            echo "THIS TUTORIAL IS WITH: " . $tutorial['device_id'];
-            echo "\n";
-            echo "AND I AM WITH " . $deviceID;
-            echo "\n";
-            echo "COMPARISON RESULT: " . strcmp($tutorial['device_id'],$deviceID);
-            echo "\n";
             if(strcmp($deviceID,$tutorial['device_id']) === 0){
                 $strToReturn = $tutorial['course'] . " tutorial presence marked.";
                 return $strToReturn;
@@ -168,7 +158,7 @@ function checkCurrentTutorial($tutorialsData, $deviceID){
 function dbQueryRequest($query){
     $curl = curl_init();
     $fullQuery = "http://tweety.gq/ArrestDB" . $query;
-    echo $fullQuery;
+
     curl_setopt_array($curl, array(
     //CURLOPT_URL => ("http://tweety.gq/ArrestDB/students/rfid/" . $processedRFID),
     CURLOPT_URL => $fullQuery,
@@ -190,7 +180,6 @@ function dbQueryRequest($query){
         echo "cURL Error #:" . $err;
         return NULL;
     } else {
-        echo $response;
         return json_decode($response,true);
     }
 }
