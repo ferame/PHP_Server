@@ -56,7 +56,7 @@ function getTweet(){
     echo $tweets[0]['text'];
 }
 
-function sendTwillioMessage(){
+function sendTwilioMessage(){
     // Required if your environment does not handle autoloading
     require __DIR__ . '/vendor/autoload.php';
 
@@ -79,7 +79,8 @@ function sendTwillioMessage(){
             'body' => 'Hello from NodeMCU!'
         )
     );
-    echo "SMS sent";
+
+    echo "SMS notification to the professor - SENT";
 }
 
 function getWeather(){
