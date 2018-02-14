@@ -59,7 +59,6 @@ function getTweet(){
 function sendTwilioMessage(){
     // Required if your environment does not handle autoloading
     require __DIR__ . '/vendor/autoload.php';
-    echo "Accessed this";
     // Use the REST API Client to make requests to the Twilio REST API
 
 
