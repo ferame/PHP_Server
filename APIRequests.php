@@ -134,7 +134,7 @@ function checkTutorial($postRez){
 function checkCurrentTutorial($tutorialsData, $deviceID){
     //$time = date("D G:i");
     //$timeTimestamp = strtotime($time);
-    $timeTimestamp = strtotime("MON 14:30");
+    $timeTimestamp = strtotime("FRI 15:30");
     $supposedToGo = NULL;
     foreach($tutorialsData as $tutorial){
         $startTimestamp = strtotime($tutorial['start_time']);
