@@ -61,7 +61,6 @@ function sendTwilioMessage(){
     require __DIR__ . '/vendor/autoload.php';
     // Use the REST API Client to make requests to the Twilio REST API
 
-
     // Your Account SID and Auth Token from twilio.com/console
     $sid = 'AC13e4b5e82ecd12c5c1a60a523c0843dd';
     $token = '93d910e4ff352ca25a142565e90d2a63';
@@ -83,7 +82,7 @@ function sendTwilioMessage(){
 }
 
 function getWeather(){
-    $json = file_get_contents("http://api.openweathermap.org/data/2.5/forecast?id=3333229&appid=1122e950271e86bfbffb6a2378ff6943&units=metric");
+    $json = file_get_contents("https://api.openweathermap.org/data/2.5/forecast?id=3333229&appid=1122e950271e86bfbffb6a2378ff6943&units=metric");
     $weatherInfo = json_decode($json, true);
 
     $time_prediction = $weatherInfo['list'][0]['dt_txt'];
@@ -121,7 +120,7 @@ function checkTutorial($postRez){
     if (!empty($uniid)){
         $jsonResponseTutorials = dbQueryRequest("/tutorials/uniid/" . $uniid);
     }else{
-        return "User doesn't exist";
+        return "No student associated with this card";
     }
     
     if (!empty($jsonResponseTutorials)){
@@ -157,7 +156,7 @@ function checkCurrentTutorial($tutorialsData, $deviceID){
 
 function dbQueryRequest($query){
     $curl = curl_init();
-    $fullQuery = "http://tweety.gq/ArrestDB" . $query;
+    $fullQuery = "https://tweety.gq/ArrestDB" . $query;
 
     curl_setopt_array($curl, array(
     //CURLOPT_URL => ("http://tweety.gq/ArrestDB/students/rfid/" . $processedRFID),
