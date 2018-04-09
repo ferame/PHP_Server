@@ -1,3 +1,17 @@
+RewriteEngine On
+ 
+# Go to https if not on /APIRequests.php
+ 
+RewriteCond %{SERVER_PORT} =80
+RewriteCond %{THE_REQUEST} !/APIRequests.php [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+ 
+# Go to http if on /APIRequests.php
+ 
+#RewriteCond %{SERVER_PORT} !=80
+#RewriteCond %{THE_REQUEST} /APIRequests.php [NC]
+#RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 <IfModule mod_rewrite.c>
 	RewriteEngine	On
 	RewriteCond		%{REQUEST_FILENAME}	!-d

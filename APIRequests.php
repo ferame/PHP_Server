@@ -58,7 +58,7 @@ function getTweet(){
 
 function sendTwilioMessage(){
     // Required if your environment does not handle autoloading
-    require __DIR__ . '/vendor/autoload.php';
+    /require __DIR__ . '/vendor/autoload.php';
     // Use the REST API Client to make requests to the Twilio REST API
 
 
@@ -134,7 +134,7 @@ function checkTutorial($postRez){
 function checkCurrentTutorial($tutorialsData, $deviceID){
     //$time = date("D G:i");
     //$timeTimestamp = strtotime($time);
-    $timeTimestamp = strtotime("FRI 15:30");
+    $timeTimestamp = strtotime("FRI 11:30");
     $supposedToGo = NULL;
     foreach($tutorialsData as $tutorial){
         $startTimestamp = strtotime($tutorial['start_time']);
