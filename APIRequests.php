@@ -58,12 +58,12 @@ function getTweet(){
 
 function sendTwilioMessage(){
     // Required if your environment does not handle autoloading
-    /require __DIR__ . '/vendor/autoload.php';
+    //require __DIR__ . '/vendor/autoload.php';
     // Use the REST API Client to make requests to the Twilio REST API
 
     // Your Account SID and Auth Token from twilio.com/console
-    $sid = 'SKe4cf8184d00206d52f2eaf2855b1e62b';
-    $token = 'ntXhfdjBgxK9N7NvtUoCKFI4twaossZe';
+    $sid = 'AC13e4b5e82ecd12c5c1a60a523c0843dd';
+    $token = '93d910e4ff352ca25a142565e90d2a63';
     $client = new Client($sid, $token);
 
     // Use the client to do fun stuff like send text messages!
