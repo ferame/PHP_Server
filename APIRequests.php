@@ -34,17 +34,24 @@ if ($isStudent){
 
 function getTweet(){
     /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
-    $settings = array(
+    /*$settings = array(
     'oauth_access_token' => "4527318323-QgDLuD3iPMTlvYTTYSrroMigkmwH97IcXcYidvx",
     'oauth_access_token_secret' => "PLhGHAR1s9GHwmBSBqHYPJI5tMM1NmbUd4vAhvHC6ks8l",
     'consumer_key' => "660PKn9qD6wnTyARbolTUKMEJ",
     'consumer_secret' => "4ooMzBfjIFKbGPdrIVY6dS4mWm0loDsET0wnkW8YtQQ0WEcG6C"
+    );*/
+    //echo("This was called");
+    $settings = array(
+        'oauth_access_token' => "990687770111827969-ogpTdmjcXrDlVF7JDzljOq5fZ5lLba3",
+        'oauth_access_token_secret' => "EXnhLFzNdH6VoUSzj6PimE6tUHjB1THBMyhjzvpCuzYkT",
+        'consumer_key' => "TJeoYqd2LBCPEl00S5lPX5scS",
+        'consumer_secret' => "0ia80SAXNbrm8Xhn5MdFgBaZgTNNx4CAoDMANNwbbFB9C9bagT"
     );
 
     $url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 
     $requestMethod = "GET";
-    $user = "Dziastis";
+    $user = "prototypeED";
     $count = 1;
     $getfield = "?screen_name=$user&count=$count";
     $twitter = new TwitterAPIExchange($settings);
@@ -52,7 +59,6 @@ function getTweet(){
     ->buildOauth($url, $requestMethod)
     ->performRequest();
     $tweets = json_decode($json, true);
-
     echo $tweets[0]['text'];
 }
 
@@ -69,12 +75,15 @@ function sendTwilioMessage(){
     // Use the client to do fun stuff like send text messages!
     $client->messages->create(
     // the number you'd like to send the message to
-        '+447547246501',
+        //'+447547246501',
+        //'+447597290539',
+        '+447460985636',
         array(
             // A Twilio phone number you purchased at twilio.com/console
             'from' => '+447403930290',
             // the body of the text message you'd like to send
-            'body' => 'Hello from NodeMCU!'
+            //'body' => 'Hello from NodeMCU!'
+            'body' => 'Hi, this is a notification from the prototype!'
         )
     );
 
