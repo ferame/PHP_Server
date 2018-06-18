@@ -22,8 +22,8 @@ if ($isTweet) {
     getTweet();
 }
 if ($isTwilio){
-    //echo("Twilio service is disabled for Honours project upgrades taking place - Justin");
-    sendTwilioMessage();
+    echo("Twilio service is disabled. Project upgrades taking place - Justin");
+    //sendTwilioMessage();
 }
 if ($isWeather){
     getWeather();
